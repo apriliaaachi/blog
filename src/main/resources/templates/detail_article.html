@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/layout}">
+
+<body>
+<div layout:fragment="content" th:remove="tag">
+    <div class="container-post">
+        <div class="container-fluid">
+            <h1 style="color: #ffffff" class="text-left"><b th:text="${article.title}"></b></h1>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="article-meta">
+                        <span style="color: #28bc4e"  class="author mr-2"><img src="images/person_2.jpg"> <b th:text="${article.author}"></b></span>&bullet;
+                        <span style="color: darkgray" class="mr-2" th:text="${#calendars.format(article.date, 'dd MMMM yyyy')}"></span> &bullet;
+                        <span style="color: darkgray" class="ml-2"><span class="fa fa-heart"></span> 3</span>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <button class="btn-success"><span class="class= fa fa-pencil"></span>Edit Article</button>
+                    <button class="btn-danger"><span class="fa fa-trash"></span>Delete Article</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid" style="padding-right: 250px">
+        <p th:text="${article.content}"></p>
+    </div>
+    <div>
+        <form action="#" th:action="@{/post_comment}" th:object="${comment}" method="post">
+            <div class="form-group">
+                <textarea style="resize:none;height:120px;" class="form-control" type="text" th:field="*{content}" id="content" placeholder="Write your article (in markdown)"/>
+            </div>
+            <input type="submit" value="Post Comment" class="btn btn-success right-button"/>
+        </form>
+    </div>
+    <div>
+
+    </div>
+</div>
+</body>
+</html>
