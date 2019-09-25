@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:color="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{fragments/layout}">
+<body>
+<div layout:fragment="content" th:remove="tag">
+    <div class="container container-log" style="margin-top: 20px">
+        <h2 class="text-center">Sign In</h2>
+        <a href="/signin"><p class="text-center" style="color: #28bc4e">Need an account ?</p></a>
+        <form action="#" th:action="@{/signin-action}" method="article">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input class="form-control" type="text" id="email" name="email" placeholder="Email"/>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input class="form-control" type="password" id="password" name="password"  placeholder="Password"/>
+            </div>
+            <input type="submit" value="LOGIN" class="btn btn-success"/>
+        </form>
+    </div>
+</div>
+</body>
+</html>

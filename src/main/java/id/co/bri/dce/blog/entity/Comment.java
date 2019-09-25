@@ -13,7 +13,10 @@ public class Comment {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private long id;
-    private long articleid;
     private String content;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "articleid", nullable = false)
+    private Article article;
 
 }

@@ -27,11 +27,6 @@ public class ArticleController {
         return "create_article";
     }
 
-    @GetMapping("/detail_article")
-    public String detailArticle() {
-        return "detail_article";
-    }
-
     @PostMapping("/save_article")
     public String saveArticle(@ModelAttribute Article article) {
         Date date = new Date();
@@ -46,15 +41,15 @@ public class ArticleController {
     @GetMapping("/read_more/{id}")
     public String readMore(@PathVariable("id") long id, Model model) {
         Article article = articleDao.findById(id);
-
+        Comment comment = commentDao.findByArticleId(article.getId());
         model.addAttribute("article", article);
-        
+        model.addAttribute("comment", comment);
         return "detail_article";
     }
 
-    @PostMapping("/post_comment/{id}")
-    public String comment(@PathVariable("id") long id, @ModelAttribute Comment comment) {
-        comment.setId(id);
+    @PostMapping("/post_comment")
+    public String comment(@ModelAttribute Comment comment, @ModelAttribute Article article) {
+        comment.setId(article.getId());
         commentDao.save(comment);
         return "detail_article";
     }
