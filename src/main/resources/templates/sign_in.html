@@ -3,12 +3,15 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:color="http://www.w3.org/1999/xhtml"
       layout:decorate="~{fragments/layout}">
+<head>
+    <title>Sign Up</title>
+</head>
 <body>
 <div layout:fragment="content" th:remove="tag">
     <div class="container container-log" style="margin-top: 20px">
         <h2 class="text-center">Sign In</h2>
         <a href="/signin"><p class="text-center" style="color: #28bc4e">Need an account ?</p></a>
-        <form action="#" th:action="@{/signin-action}" method="article">
+        <form action="#" th:action="@{/signin-action}" method="post">
             <div class="form-group">
                 <label for="email">Email</label>
                 <input class="form-control" type="text" id="email" name="email" placeholder="Email"/>

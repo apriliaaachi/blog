@@ -6,7 +6,10 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -16,7 +19,6 @@ public class Article {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private long id;
-    private String author;
     private String title;
     private String content;
     private Date date;
@@ -26,4 +28,7 @@ public class Article {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "userid", nullable = false)
     private User user;
+
+    @OneToMany(mappedBy = "article", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<Comment>();
 }

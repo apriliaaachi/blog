@@ -3,6 +3,9 @@
       xmlns:th="http://www.thymeleaf.org"
       layout:decorate="~{fragments/layout}">
 
+<head>
+    <title>Detail Article</title>
+</head>
 <body>
 <div layout:fragment="content" th:remove="tag">
     <div class="container-post">
@@ -11,31 +14,37 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="article-meta">
-                        <span style="color: #28bc4e"  class="author mr-2"><img src="images/person_2.jpg"> <b th:text="${article.author}"></b></span>&bullet;
+                        <span style="color: #28bc4e"  class="author mr-2"><img src="images/person_2.jpg"> <b th:text="${article.user.name}"></b></span>&bullet;
                         <span style="color: darkgray" class="mr-2" th:text="${#calendars.format(article.date, 'dd MMMM yyyy')}"></span> &bullet;
                         <span style="color: darkgray" class="ml-2"><span class="fa fa-heart"></span> 3</span>
                     </div>
                 </div>
                 <div class="col-sm-6">
-                    <button class="btn-success"><span class="class= fa fa-pencil"></span>Edit Article</button>
-                    <button class="btn-danger"><span class="fa fa-trash"></span>Delete Article</button>
+                    <a class="btn btn-success" th:href="@{/edit_article/{id}(id=${article.id})}"><span class="class= fa fa-pencil"></span>Edit Article</a>
+                    <a class="btn btn-danger" th:href="@{/detail_article/{id}(id=${article.id})}"><span class="fa fa-trash"></span>Delete Article</a>
                 </div>
             </div>
         </div>
     </div>
-    <div class="container-fluid" style="padding-right: 250px">
+    <div class="container-fluid" style="margin-top: 30px; margin-bottom: 50px">
         <p th:text="${article.content}"></p>
     </div>
-<!--    <div>-->
-<!--        <form action="#" th:action="@{/post_comment}" th:object="${comment}" method="post">-->
-<!--            <div class="form-group">-->
-<!--                <textarea style="resize:none;height:120px;" class="form-control" type="text" th:field="*{content}" id="content" placeholder="Write your article (in markdown)"/>-->
-<!--            </div>-->
-<!--            <input type="submit" value="Post Comment" class="btn btn-success right-button"/>-->
-<!--        </form>-->
-<!--    </div>-->
-    <div>
-
+    <div class="container-fluid">
+        <hr style="border-top: 2px solid #e3e3e3">
+        <div style="padding-left: 300px; margin-bottom: 50px">
+            <h4>Comment</h4>
+            <form action="#" th:action="@{/post_comment}" th:object="${comment}" method="post">
+                <div class="form-group">
+                    <textarea style="resize:none;height:120px;" class="form-control" type="text" th:field="*{content}" id="content" placeholder="Write your article (in markdown)"/>
+                </div>
+                <input type="submit" value="Post Comment" class="btn btn-success"/>
+            </form>
+            <hr>
+            <div th:each="comment : ${article.comments}" class="form-group" style="margin-bottom: 10px; background: #f2f2f2; padding: 10px">
+                <p th:text="${comment.content}"></p>
+                <p th:text="${#calendars.format(comment.date, 'dd MMMM yyyy')}"></p>
+            </div>
+        </div>
     </div>
 </div>
 </body>
