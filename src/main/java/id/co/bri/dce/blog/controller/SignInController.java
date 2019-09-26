@@ -10,18 +10,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.persistence.criteria.Root;
-import javax.servlet.HttpConstraintElement;
 import javax.servlet.http.HttpSession;
-import java.util.List;
-
 import static java.lang.Boolean.TRUE;
 
 class RootController {
     public ModelAndView getPage(String s) {
         ModelAndView mv = new ModelAndView(s);
-//        User user = (User) HttpConstraintElement
-//        mv.addObject("user", user);
         return mv;
     }
 }
