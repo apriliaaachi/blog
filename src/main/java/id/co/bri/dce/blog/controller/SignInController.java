@@ -25,17 +25,6 @@ public class SignInController extends RootController {
     @Autowired
     UserDao userDao;
 
-    @RequestMapping("/login")
-    public String login() {
-        return "login.html";
-    }
-
-    @RequestMapping("/login-error.html")
-    public String loginError(Model model) {
-        model.addAttribute("loginError", true);
-        return "login.html";
-    }
-
     @GetMapping("/signin")
     public String signIn(Model model) {
         model.addAttribute("user", new User());
