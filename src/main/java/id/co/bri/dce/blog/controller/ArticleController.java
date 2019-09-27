@@ -5,6 +5,7 @@ import id.co.bri.dce.blog.entity.Comment;
 import id.co.bri.dce.blog.entity.User;
 import id.co.bri.dce.blog.repository.ArticleDao;
 import id.co.bri.dce.blog.repository.CommentDao;
+import org.aspectj.weaver.patterns.HasMemberTypePatternForPerThisMatching;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,23 +30,29 @@ public class ArticleController {
     private CommentDao commentDao;
 
     @GetMapping("/new_article")
-    public String newArticle(Model model) {
+    public String newArticle(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        model.addAttribute("user", user);
         model.addAttribute("article", new Article());
         return "create_article";
     }
 
     @PostMapping("/save_article")
-    public String saveArticle(@ModelAttribute Article article) {
+    public String saveArticle(@ModelAttribute Article article, HttpSession session) {
+        User user = (User) session.getAttribute("user");
         Date date = new Date();
         article.setDate(date);
+        article.setUser(user);
         article.setStatus("ACTIVE");
         articleDao.save(article);
-        return "redirect:/detail_article/article.getId";
+        return "home";
     }
 
     @GetMapping("/detail_article/{id}")
-    public String readMore(@PathVariable("id") long id, Model model) {
+    public String readMore(@PathVariable("id") long id, Model model, HttpSession session) {
         Article article = articleDao.findById(id);
+        User user = (User) session.getAttribute("user");
+        model.addAttribute("user", user);
         model.addAttribute("comment", new Comment());
         model.addAttribute("article", article);
         return "detail_article";
@@ -55,12 +62,14 @@ public class ArticleController {
     public String comment(@ModelAttribute Comment comment, @ModelAttribute Article article) {
         comment.setArticle(article);
         commentDao.save(comment);
-        return "redirect:/detail_article/article.getId";
+        return "detail_article";
     }
 
     @GetMapping("/edit_article/{id}")
-    public String editArticle(@PathVariable("id") long id, Model model) {
+    public String editArticle(@PathVariable("id") long id, Model model, HttpSession session) {
+        User user = (User) session.getAttribute("user");
         Article article = articleDao.findById(id);
+        model.addAttribute("user", user);
         model.addAttribute("article", article);
         return "edit_article";
     }
@@ -70,7 +79,7 @@ public class ArticleController {
         article.setStatus("ACTIVE");
         articleDao.save(article);
 
-        return "redirect:/detail_article/a";
+        return "detail_article";
     }
 
     @RequestMapping(value = "/delete_article/{id}", method = RequestMethod.GET)
